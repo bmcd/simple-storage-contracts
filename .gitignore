@@ -1,5 +1,9 @@
+.idea
 node_modules
 
-#Hardhat files
+# Don't commit hardhat network openzeppelin-upgrades deployment info, just real networks
+.openzeppelin/unknown-*.json
+
+# Hardhat files
 cache
 artifacts

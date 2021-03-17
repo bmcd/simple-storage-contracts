@@ -3,6 +3,7 @@ node_modules
 
 # Don't commit hardhat network openzeppelin-upgrades deployment info, just real networks
 .openzeppelin/unknown-*.json
+.env
 
 # Hardhat files
 cache

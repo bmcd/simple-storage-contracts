@@ -1,0 +1,43 @@
+{
+  "manifestVersion": "3.1",
+  "impls": {
+    "7b85110868961dfb0bf51753704ad7d5715054035b8640c3f110da1ec3929062": {
+      "address": "0xD76d2D023ECDDCF57562214b15b4F4b46A18EA58",
+      "txHash": "0x1572c067d6bf4aaf49102a5062dd60e2652eb84096fb28438c1e03896e014ab0",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "SimpleStorageV1",
+            "label": "storedData",
+            "type": "t_uint256",
+            "src": "contracts/SimpleStorageV1.sol:8"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    }
+  },
+  "admin": {
+    "address": "0xbeE938E32020A6cc976bC53a7F57b92D77bd0028",
+    "txHash": "0x5430649253825c70927761f5f284167f6656b7bfbdf4388b5975a54c397eadc2"
+  }
+}

@@ -34,6 +34,52 @@
           }
         }
       }
+    },
+    "0b7ad4f8a63fceeb3519c947926b6c1f5ae80fb4578fe46ab557cd7d88c779f0": {
+      "address": "0xfCCBE8bFa9d742de0d6d2663B9ecFb8aA859901f",
+      "txHash": "0xa6e1f9be0af91640f34f6cb9821ca536964aeda7b302f04b33f0cc59e100297c",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "SimpleStorageV2",
+            "label": "storedData",
+            "type": "t_uint256",
+            "src": "contracts/SimpleStorageV2.sol:8"
+          },
+          {
+            "contract": "SimpleStorageV2",
+            "label": "userData",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/SimpleStorageV2.sol:9"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
     }
   },
   "admin": {

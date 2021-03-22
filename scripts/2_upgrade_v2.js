@@ -4,26 +4,21 @@
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const { ethers, upgrades } = require("hardhat");
+const { upgradeToV2 } = require('./helpers')
 
-async function main() {
+async function main (proxyAddress) {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-
-  // We get the contract to deploy
-  const SimpleStorageV2 = await ethers.getContractFactory("SimpleStorageV2");
-  const ss2 = await upgrades.upgradeProxy("0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0", SimpleStorageV2)
-
-  await ss2.deployed();
-  console.log("Implementation upgraded to V2, deployed to:", ss2.address);
+  await upgradeToV2(proxyAddress)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main()
+main("0x32D5AFB271C22ed6Db72D5D336F48E96eBc0c66C")
   .then(() => process.exit(0))
   .catch(error => {
     console.error(error);

@@ -7,7 +7,7 @@
 const { ethers, upgrades } = require("hardhat");
 const { BigNumber } = require('@ethersproject/bignumber')
 
-async function main() {
+async function main (coinProxyAddress) {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -22,7 +22,7 @@ async function main() {
   ]
 
   const SimpleStorageCoin = await ethers.getContractFactory("SimpleStorageCoin");
-  const ssc = await SimpleStorageCoin.attach("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853")
+  const ssc = await SimpleStorageCoin.attach(coinProxyAddress)
 
   await ssc.deployed();
   console.log('total', (await ssc.totalSupply()).toString())
@@ -36,7 +36,7 @@ async function main() {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main()
+ main("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853")
   .then(() => process.exit(0))
   .catch(error => {
     console.error(error);

@@ -1,24 +1,23 @@
+const { deployV1, upgradeToV2, deployTokenV1 } = require('../scripts/helpers')
+
 const { expect } = require("chai");
 const { ethers, upgrades } = require("hardhat");
 const { BigNumber } = require('@ethersproject/bignumber')
 
 describe("StorageProxy", function() {
   it("Should be able to access SimpleStorageV1 and V2 through the Proxy", async function() {
-    const SimpleStorageV1 = await ethers.getContractFactory("SimpleStorageV1");
-    let proxy = await upgrades.deployProxy(SimpleStorageV1, [1])
-
-    await proxy.deployed();
-    console.log("Implementation V1 deployed to:", proxy.address);
+    let proxy = await deployV1()
 
     await testGlobalStorage(proxy, 1, 123)
 
-    const SimpleStorageV2 = await ethers.getContractFactory("SimpleStorageV2");
-    proxy = await upgrades.upgradeProxy(proxy.address, SimpleStorageV2)
-    await proxy.deployed();
-    console.log("Implementation upgraded to V2, deployed to:", proxy.address);
+    proxy = await upgradeToV2(proxy.address)
 
     await testGlobalStorage(proxy, 123, 234)
     await testUserStorage(proxy, 555, 666)
+
+    let coinProxy = await deployTokenV1()
+
+    await testTokenContract(coinProxy)
   });
 });
 

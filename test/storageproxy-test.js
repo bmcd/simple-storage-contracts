@@ -1,4 +1,4 @@
-const { deployV1, upgradeToV2, deployTokenV1 } = require('../scripts/helpers')
+const { deployV1, upgradeToV2, upgradeToV3, deployTokenV1 } = require('../scripts/helpers')
 
 const { expect } = require("chai");
 const { ethers, upgrades } = require("hardhat");
@@ -18,6 +18,12 @@ describe("StorageProxy", function() {
     let coinProxy = await deployTokenV1()
 
     await testTokenContract(coinProxy)
+
+    proxy = await upgradeToV3(proxy.address, coinProxy.address)
+
+    await expect(proxy.migrate(coinProxy.address, 5000)).to.be.revertedWith("revert Migratable: contract is already migrated")
+    console.log("Implementation V3 deployed to:", proxy.address, " and using SSC token contract at:", coinProxy.address);
+    await testStorageWithTokenPayments(proxy, coinProxy)
   });
 });
 
@@ -51,3 +57,29 @@ async function testTokenContract (coinProxy) {
   await coinProxy.transfer(addr2.address, BigNumber.from('1000000000000000000'))
   expect(await coinProxy.balanceOf(addr2.address)).to.equal(BigNumber.from('1000000000000000000'))
 }
+
+async function testStorageWithTokenPayments (proxy, coinProxy) {
+  const [addr1, addr2] = await ethers.getSigners()
+
+  expect(await proxy.get()).to.equal(234)
+
+  await expect(proxy.set(123)).to.be.revertedWith('revert ERC20: transfer amount exceeds allowance')
+  expect(await proxy.get()).to.equal(234)
+
+  await coinProxy.approve(proxy.address, 10000)
+
+  await proxy.set(123)
+  expect(await proxy.get()).to.equal(123)
+  await proxy.set(456)
+  expect(await proxy.get()).to.equal(456)
+  await expect(proxy.set(789)).to.be.revertedWith('revert ERC20: transfer amount exceeds allowance')
+  expect(await proxy.get()).to.equal(456)
+
+  console.log('Setting value for ', addr1.address, 'to', 777)
+  await expect(proxy.setForSender(777)).to.be.revertedWith('revert ERC20: transfer amount exceeds allowance')
+  expect(await proxy.getForUser(addr1.address)).to.equal(555)
+  await coinProxy.approve(proxy.address, 5000)
+  await proxy.setForSender(777)
+  expect(await proxy.getForUser(addr1.address)).to.equal(777)
+}
+

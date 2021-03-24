@@ -555,6 +555,76 @@
           }
         }
       }
+    },
+    "3861c75cf93332218864bb7ecfbd334db9f9d82a1f7b133647d061570af53bbf": {
+      "address": "0xE0f287137877502A569B12C33d9F98e5AacFB1Eb",
+      "txHash": "0xa3f719105ce76b4e1f78dab688bcf0485ccc260c90a8402941db610bdba14092",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "SimpleStorageV4",
+            "label": "storedData",
+            "type": "t_uint256",
+            "src": "contracts/SimpleStorageV4.sol:11"
+          },
+          {
+            "contract": "SimpleStorageV4",
+            "label": "userData",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/SimpleStorageV4.sol:12"
+          },
+          {
+            "contract": "SimpleStorageV4",
+            "label": "price",
+            "type": "t_uint256",
+            "src": "contracts/SimpleStorageV4.sol:13"
+          },
+          {
+            "contract": "SimpleStorageV4",
+            "label": "token",
+            "type": "t_contract(SimpleStorageCoin)4812",
+            "src": "contracts/SimpleStorageV4.sol:14"
+          },
+          {
+            "contract": "SimpleStorageV4",
+            "label": "badge",
+            "type": "t_contract(SimpleStorageBadge)4775",
+            "src": "contracts/SimpleStorageV4.sol:15"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(SimpleStorageCoin)4812": {
+            "label": "contract SimpleStorageCoin"
+          },
+          "t_contract(SimpleStorageBadge)4775": {
+            "label": "contract SimpleStorageBadge"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
     }
   },
   "admin": {

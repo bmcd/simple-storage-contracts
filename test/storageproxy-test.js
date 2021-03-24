@@ -1,4 +1,4 @@
-const { deployV1, upgradeToV2, upgradeToV3, deployTokenV1 } = require('../scripts/util/helpers')
+const { deployBadgeV1, deployV1, upgradeToV2, upgradeToV3, upgradeToV4, deployTokenV1 } = require('../scripts/util/helpers')
 
 const { expect } = require("chai");
 const { ethers, upgrades } = require("hardhat");
@@ -24,6 +24,11 @@ describe("StorageProxy", function() {
     await expect(proxy.migrate(coinProxy.address, 5000)).to.be.revertedWith("revert Migratable: contract is already migrated")
     console.log("Implementation V3 deployed to:", proxy.address, " and using SSC token contract at:", coinProxy.address);
     await testStorageWithTokenPayments(proxy, coinProxy)
+
+    const badgeProxy = await deployBadgeV1(proxy.address)
+    proxy = await upgradeToV4(proxy.address, badgeProxy.address)
+
+    await testBadges(proxy, coinProxy, badgeProxy)
   });
 });
 
@@ -82,4 +87,26 @@ async function testStorageWithTokenPayments (proxy, coinProxy) {
   await proxy.setForSender(777)
   expect(await proxy.getForUser(addr1.address)).to.equal(777)
 }
+
+async function testBadges (proxy, coinProxy, badgeProxy) {
+  const [addr1, addr2] = await ethers.getSigners()
+
+  expect(await badgeProxy.balanceOf(addr1.address)).to.equal(0)
+  await expect(proxy.mintBadge('testbadge')).to.be.revertedWith('revert ERC20: transfer amount exceeds allowance')
+  await coinProxy.approve(proxy.address, 5000)
+  await proxy.mintBadge('testbadge')
+  expect(await badgeProxy.balanceOf(addr1.address)).to.equal(1)
+  expect(await badgeProxy.tokenOfOwnerByIndex(addr1.address, 0)).to.equal(1)
+  expect(await badgeProxy.tokenURI(1)).to.equal('testbadge')
+
+  await coinProxy.approve(proxy.address, 5000)
+  await expect(proxy.mintBadge('testbadge')).to.be.revertedWith('VM Exception while processing transaction: revert TokenURI must be unique')
+
+  expect(await badgeProxy.balanceOf(addr2.address)).to.equal(0)
+  await expect(badgeProxy.connect(addr2).mint(addr2.address, 'testbadge2')).to.be.revertedWith('VM Exception while processing transaction: revert ERC721PresetMinterPauserAutoId: must have minter role to mint')
+  await coinProxy.connect(addr2).approve(proxy.address, 5000)
+  await proxy.connect(addr2).mintBadge('testbadge2')
+  expect(await badgeProxy.balanceOf(addr2.address)).to.equal(1)
+}
+
 

@@ -31,6 +31,19 @@ async function upgradeToV3 (proxyAddress, coinProxyAddress) {
   return proxy
 }
 
+async function upgradeToV4 (proxyAddress, badgeAddress) {
+  const SimpleStorageV4 = await ethers.getContractFactory('SimpleStorageV4')
+  const proxy = await upgrades.upgradeProxy(proxyAddress, SimpleStorageV4)
+  await proxy.deployed()
+
+  // TODO this should be done in one transaction using openzeppelin's upgradeToAndCall() function
+  // TODO but openzeppelin-upgrades doesn't support this yet
+  await proxy.migrate2(badgeAddress)
+  console.log('Implementation upgraded to V4, using proxy at:', proxy.address, 'and badge contract at', badgeAddress)
+  return proxy
+}
+
+
 async function deployTokenV1 () {
   const SimpleStorageCoin = await ethers.getContractFactory('SimpleStorageCoin')
   const coinProxy = await upgrades.deployProxy(SimpleStorageCoin, [BigNumber.from('1000000000000000000000')])
@@ -49,4 +62,4 @@ async function deployBadgeV1 (owner) {
   return badgeProxy
 }
 
-module.exports = { deployV1, upgradeToV2, upgradeToV3, deployTokenV1, deployBadgeV1 }
+module.exports = { deployV1, upgradeToV2, upgradeToV3, upgradeToV4, deployTokenV1, deployBadgeV1 }

@@ -3,21 +3,24 @@
 //
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-const { deployBadgeV1 } = require('./helpers')
+const hre = require("hardhat");
+const { deployBadgeV1 } = require('./util/helpers')
+const addresses = require('./util/addresses')
 
-async function main(simpleStorageAddress) {
+async function main() {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
-  await deployBadgeV1(simpleStorageAddress)
+  const proxyAddress = addresses[hre.network.name].proxy
+  await deployBadgeV1(proxyAddress)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main("0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0")
+main()
   .then(() => process.exit(0))
   .catch(error => {
     console.error(error);

@@ -1,4 +1,4 @@
-const { deployV1, upgradeToV2, upgradeToV3, deployTokenV1 } = require('../scripts/helpers')
+const { deployV1, upgradeToV2, upgradeToV3, deployTokenV1 } = require('../scripts/util/helpers')
 
 const { expect } = require("chai");
 const { ethers, upgrades } = require("hardhat");

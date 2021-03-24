@@ -1,4 +1,4 @@
-const { deployBadgeV1 } = require('../scripts/helpers')
+const { deployBadgeV1 } = require('../scripts/util/helpers')
 
 const { expect } = require("chai");
 const { ethers, upgrades } = require("hardhat");

@@ -4,7 +4,7 @@
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const { ethers, upgrades } = require("hardhat");
-const { deployV1 } = require('./helpers')
+const { deployV1 } = require('./util/helpers')
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command

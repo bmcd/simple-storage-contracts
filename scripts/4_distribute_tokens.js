@@ -4,10 +4,11 @@
 // When running the script with `hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 
-const { ethers, upgrades } = require("hardhat");
+const hre = require("hardhat");
 const { BigNumber } = require('@ethersproject/bignumber')
+const addresses = require('./util/addresses')
 
-async function main (coinProxyAddress) {
+async function main () {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
   //
@@ -15,13 +16,15 @@ async function main (coinProxyAddress) {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-  const [addr1] = await ethers.getSigners();
+  const coinProxyAddress = addresses[hre.network.name].coinProxy
+
+  const [addr1] = await hre.ethers.getSigners();
   const recipients = [
     "0xf252019adF9637AF4Ef56145B1971E1Ac024BDc9",
     "0xF36d5771B051b197d8532795249C55444b7a7e76",
   ]
 
-  const SimpleStorageCoin = await ethers.getContractFactory("SimpleStorageCoin");
+  const SimpleStorageCoin = await hre.ethers.getContractFactory("SimpleStorageCoin");
   const ssc = await SimpleStorageCoin.attach(coinProxyAddress)
 
   await ssc.deployed();
@@ -36,7 +39,7 @@ async function main (coinProxyAddress) {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
- main("0x0165878A594ca255338adfa4d48449f69242Eb8F")
+ main()
   .then(() => process.exit(0))
   .catch(error => {
     console.error(error);

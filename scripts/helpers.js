@@ -40,4 +40,13 @@ async function deployTokenV1 () {
   return coinProxy
 }
 
-module.exports = { deployV1, upgradeToV2, upgradeToV3, deployTokenV1 }
+async function deployBadgeV1 (owner) {
+  const SimpleStorageBadge = await ethers.getContractFactory('SimpleStorageBadge')
+  const badgeProxy = await upgrades.deployProxy(SimpleStorageBadge, ['SimpleStorageBadge', 'SSB', '', owner])
+
+  await badgeProxy.deployed()
+  console.log('Badge Implementation V1 deployed using proxy at:', badgeProxy.address)
+  return badgeProxy
+}
+
+module.exports = { deployV1, upgradeToV2, upgradeToV3, deployTokenV1, deployBadgeV1 }

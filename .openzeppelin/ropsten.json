@@ -625,6 +625,94 @@
           }
         }
       }
+    },
+    "aa8c60c2c5a73460b0a03f315b3597ada3122999015e826922503edd781318f7": {
+      "address": "0x645EF4c6c2000c50C2917294279293Dfe60cD7D6",
+      "txHash": "0xb9b34db3020002cc3387f3d2d3a5f401fe3bdcbb894e66dfa3d43f7514021fbd",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "currencyToken",
+            "type": "t_contract(IERC20)509",
+            "src": "contracts/Marketplace.sol:17"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "itemToken",
+            "type": "t_contract(IERC721)652",
+            "src": "contracts/Marketplace.sol:18"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "trades",
+            "type": "t_mapping(t_uint256,t_struct(Trade)730_storage)",
+            "src": "contracts/Marketplace.sol:27"
+          },
+          {
+            "contract": "Marketplace",
+            "label": "tradeCounter",
+            "type": "t_uint256",
+            "src": "contracts/Marketplace.sol:29"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20)509": {
+            "label": "contract IERC20"
+          },
+          "t_contract(IERC721)652": {
+            "label": "contract IERC721"
+          },
+          "t_mapping(t_uint256,t_struct(Trade)730_storage)": {
+            "label": "mapping(uint256 => struct Marketplace.Trade)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_struct(Trade)730_storage": {
+            "label": "struct Marketplace.Trade",
+            "members": [
+              {
+                "label": "poster",
+                "type": "t_address"
+              },
+              {
+                "label": "item",
+                "type": "t_uint256"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
     }
   },
   "admin": {

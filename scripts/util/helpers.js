@@ -62,4 +62,14 @@ async function deployBadgeV1 (owner) {
   return badgeProxy
 }
 
-module.exports = { deployV1, upgradeToV2, upgradeToV3, upgradeToV4, deployTokenV1, deployBadgeV1 }
+async function deployMarketplaceV1 (coinAddress, badgeAddress) {
+  const Marketplace = await ethers.getContractFactory('Marketplace')
+  const marketplaceProxy = await upgrades.deployProxy(Marketplace, [coinAddress, badgeAddress])
+
+  await marketplaceProxy.deployed()
+  console.log('Marketplace Implementation V1 deployed using proxy at:', marketplaceProxy.address)
+  return marketplaceProxy
+}
+
+
+module.exports = { deployV1, upgradeToV2, upgradeToV3, upgradeToV4, deployTokenV1, deployBadgeV1, deployMarketplaceV1 }
